@@ -7,6 +7,7 @@ using App2.Stuff;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using FormsControls.Base;
+using Newtonsoft.Json;
 
 namespace App2
 {
@@ -18,6 +19,7 @@ namespace App2
 		{
             
 			InitializeComponent ();
+            GetEvents();
             this.BackgroundImage = "smallbackground.png";
 
         }
@@ -41,10 +43,29 @@ namespace App2
             // Put your code here but leaving empty works just fine
         }
 
+        List<GameEvent> events = new List<GameEvent>();
+        async void GetEvents()
+        {
+            events = await App.RestService.GetResponse<List<GameEvent>>(Constants.LoginUrl);
+            GameEvent gameEvent = new GameEvent();
+            gameEvent.EndTime = "falsdkfjlkasd";
+            string myPostedEvent = JsonConvert.SerializeObject(gameEvent);
+            await App.RestService.PostResponse<string>(Constants.BaseUrl + "/events/new", myPostedEvent);
+        }
+
         void Handle_Clicked(object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new Page2());
-           // App.RestService.GetResponse(Constants.LoginUrl);
+            Console.WriteLine(events.Count);
+            
+            //try
+            //{   
+                //List<GameEvent> result = Task.Run<List<GameEvent>>(async () => await App.RestService.GetResponse<List<GameEvent>>(Constants.LoginUrl)).Result;
+            //}
+            //catch (Exception exception)
+            //{
+            //    Console.WriteLine(exception.Message);
+            //}
         }
         void Handle_Clicked2(object sender, System.EventArgs e)
         {

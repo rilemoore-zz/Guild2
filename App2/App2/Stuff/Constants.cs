@@ -7,6 +7,7 @@ namespace App2.Stuff
 {
     public class Constants
     {
+        public static string BaseUrl = "http://ec2-3-16-150-197.us-east-2.compute.amazonaws.com:8080";
         public static string LoginUrl = "http://ec2-3-16-150-197.us-east-2.compute.amazonaws.com:8080/events/get";
     }
 }
